@@ -1,19 +1,19 @@
-<script>
-function setAges(data) {
-
-  // get correct div from Index.html
-  var a = document.getElementById("ages");
+function doGet(e) {
   
-  var myHTML = "<table>";
+  var htmlfile = "Index";
+  var template = HtmlService.createTemplateFromFile(htmlfile);
+  template.sheetid = "1gKRNw7wxu0jn9Xh0UiWEuG9Y9Mgz0lnrPiB-tCl1wLA";
+ 
   
-  // loop through data from spreadsheet and add it to HTML variable
-  for (i=0; i<data.length; i++) {
-    myHTML = myHTML + "<tr><td>" + data[i] + "</td></tr>";
-  }
+  return template.evaluate()
+  .setTitle(htmlfile)
+  .setSandboxMode(HtmlService.SandboxMode.IFRAME);
   
-  var myHTML = myHTML + "</table>";
-  
-  // set contents of myHTML var to div in Index.html
-  a.innerHTML = myHTML;
 }
-</script>
+
+// Get spreadsheet data and return it
+function getSpreadsheetData(sheetId) { 
+  var data = SpreadsheetApp.openById(sheetId).getSheets()[0].getDataRange().getValues();
+  return (data.length > 1) ? data : null;
+}
+
