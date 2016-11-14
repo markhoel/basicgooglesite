@@ -1,23 +1,19 @@
-<!DOCTYPE html>
-
-<!-- Use a templated HTML printing scriptlet to import common stylesheet. -->
-<?!= HtmlService.createHtmlOutputFromFile('Stylesheet').getContent(); ?>
-
-<div id="mybody">
-
-   <div class="container">
-     <div id="ages"></div>
-   </div>
-   
-</div>
-
-<!-- Use a templated HTML printing scriptlet to import JavaScript. -->
-<?!= HtmlService.createHtmlOutputFromFile('Javascript').getContent(); ?>
-
 <script>
+function setAges(data) {
 
- // call google script to access data in database and return it to setAges function in Javascript.html
- google.script.run.withSuccessHandler(setAges).getSpreadsheetData(<?= sheetid; ?>);
-
+  // get correct div from Index.html
+  var a = document.getElementById("ages");
   
+  var myHTML = "<table>";
+  
+  // loop through data from spreadsheet and add it to HTML variable
+  for (i=0; i<data.length; i++) {
+    myHTML = myHTML + "<tr><td>" + data[i] + "</td></tr>";
+  }
+  
+  var myHTML = myHTML + "</table>";
+  
+  // set contents of myHTML var to div in Index.html
+  a.innerHTML = myHTML;
+}
 </script>
